@@ -96,4 +96,51 @@ class ApiConnectorTest extends TestCase
         $array['status'] = $status;
         return json_encode($array);
     }
+
+    public function testSaveUserSuccess(): void
+    {
+        $mock = new MockHandler(
+            [
+                new Response(200, [], '{"status": "OK", "token": "dsfd79843r32d1d3dx23d32d"}'),
+                new Response(200, [], '{"status": "OK"}'),
+            ]
+        );
+
+        $handlerStack = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handlerStack]);
+
+        $c = new Lion\ApiConnector(['base_uri' => 'https://testapi.org']);
+
+        // Set mocked guzzle client into API connector.
+        $reflection = new ReflectionClass($c);
+        $property = $reflection->getProperty('client');
+        $property->setAccessible(true);
+        $property->setValue($c, $client);
+
+        $c->login('tests', '123456');
+
+        $user = new Lion\User();
+        $user->id = 105;
+        $user->active = '1';
+        $user->blocked = false;
+        $user->name = 'tests';
+        $user->permissions = [
+            new \Lion\Permission(['id' => 105]),
+            new \Lion\Permission(['id' => 106]),
+        ];
+        $c->saveUser($user);
+
+        /** @var Request $request */
+        $request = $mock->getLastRequest();
+        $this->assertSame('POST', $request->getMethod(), 'method not equal');
+        $this->assertSame(
+            '/user/105/update?token=dsfd79843r32d1d3dx23d32d',
+            (string)$request->getUri(),
+            'URI not equal'
+        );
+        $this->assertJsonStringEqualsJsonFile(
+            __DIR__ . '/fixture/save-user-request-body.json',
+            $request->getBody()->getContents()
+        );
+    }
 }
