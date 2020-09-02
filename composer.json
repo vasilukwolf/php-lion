@@ -9,5 +9,19 @@
             "email": "vasilukwolf@gmail.com",
             "homepage": "https://github.com/vasilukwolf"
         }
-    ]
+    ],
+    "require-dev": {
+        "overtrue/phplint": "^2.0",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lion\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "ext-json": "*"
+    }
 }
