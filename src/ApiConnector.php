@@ -96,4 +96,25 @@ class ApiConnector
 
         return new User($data);
     }
+
+    /**
+     * This method allows you to completely
+     * replace the user's data by token and user ID
+     * @param $user User An instance of user.
+     * @return void
+     * @throws LionException
+     * @throws GuzzleException
+     */
+    public function saveUser($user): void
+    {
+        $resp = $this->client->request(
+            'POST',
+            '/user/' . $user->id . '/update',
+            [
+                'query' => ['token' => $this->token],
+                'body' => json_encode($user),
+            ]
+        );
+        self::decodeResponse($resp);
+    }
 }
