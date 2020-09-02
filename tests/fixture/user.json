@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "active": "1",
+  "blocked": false,
+  "name": "Ivi Hammond",
+  "permissions": [
+    {
+      "id": 1,
+      "permission": "comment"
+    },
+    {
+      "id": 2,
+      "permission": "upload photo"
+    },
+    {
+      "id": 3,
+      "permission": "add event"
+    }
+  ]
+}

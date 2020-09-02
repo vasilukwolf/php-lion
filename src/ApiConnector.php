@@ -75,4 +75,25 @@ class ApiConnector
 
         throw new LionException('Invalid status value');
     }
+
+    /**
+     * This method receives user data by username
+     * and token after authorization
+     * @param $username string The name of the account to which the api will be accessed.
+     * @return User Returns an instance of user data by username and token
+     * @throws LionException User access statuses
+     * @throws GuzzleException
+     * @throws LionException
+     */
+    public function getUser($username): User
+    {
+        $resp = $this->client->request(
+            'GET',
+            '/get-user/' . $username,
+            ['query' => ['token' => $this->token]]
+        );
+        $data = self::decodeResponse($resp);
+
+        return new User($data);
+    }
 }
