@@ -1,0 +1,16 @@
+{
+    "name": "vasilukwolf/php-lion",
+    "description": "An example of client implementation for REST API for Guzzle",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Vasilyuk",
+            "email": "vasilukwolf@gmail.com",
+            "homepage": "https://github.com/vasilukwolf"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    }
+}
