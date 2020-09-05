@@ -1,0 +1,19 @@
+name: Static source code analysis and testing
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - uses: php-actions/composer@v2
+      - name: Static source code analysis
+        run: make lint
+      - name: Testing
+        run: make test
